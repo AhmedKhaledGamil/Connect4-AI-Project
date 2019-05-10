@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
@@ -38,8 +40,15 @@ public class menuController
 
         // This line gets the stage information
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(boardScene);
-        window.show();
+        if(ai_id.isSelected() || player_id.isSelected())
+        {
+            window.setScene(boardScene);
+            window.show();
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please choose who starts!");
+            alert.showAndWait();
+        }
     }
 }
