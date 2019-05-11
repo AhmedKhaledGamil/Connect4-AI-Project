@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -7,13 +8,20 @@
 
 <StackPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.boardController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fitHeight="600.0" fitWidth="600.0" onMouseClicked="#onMouseClick" pickOnBounds="true">
                <image>
                   <Image url="@board.png" />
                </image>
             </ImageView>
+            <Button fx:id="btn1" layoutX="5.0" mnemonicParsing="false" onAction="#column1_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button1" />
+            <Button fx:id="btn2" layoutX="90.0" mnemonicParsing="false" onAction="#column2_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button2" />
+            <Button fx:id="btn3" layoutX="175.0" mnemonicParsing="false" onAction="#column3_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button3" />
+            <Button fx:id="btn4" layoutX="260.0" mnemonicParsing="false" onAction="#column4_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button4" />
+            <Button fx:id="btn5" layoutX="345.0" mnemonicParsing="false" onAction="#column5_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button5" />
+            <Button fx:id="btn6" layoutX="430.0" mnemonicParsing="false" onAction="#column6_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button6" />
+            <Button fx:id="btn7" layoutX="515.0" mnemonicParsing="false" onAction="#column7_pressed" opacity="0.0" prefHeight="600.0" prefWidth="75.0" text="Button7" />
          </children>
       </AnchorPane>
    </children>

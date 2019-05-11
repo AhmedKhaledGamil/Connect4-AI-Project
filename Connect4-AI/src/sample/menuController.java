@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
@@ -20,17 +19,6 @@ public class menuController
     public RadioButton ai_id;
     public RadioButton player_id;
 
-//    public void startNewGame()
-//    {
-//        if(ai_id.isSelected()){
-//            System.out.println("AI Starts First!");
-//
-//        }
-//        if(player_id.isSelected()){
-//            System.out.println("Player Starts First!");
-//        }
-//    }
-
     /*
      *  When this method is called it will change the scene to the board scene!
      * */
@@ -38,7 +26,7 @@ public class menuController
     public void changeSceneToBoard(ActionEvent event) throws IOException {
 
         // Parent board = FXMLLoader.load(getClass().getResource("board.fxml"));
-        // Those line do the same thing
+        // Those lines do the same thing
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("board.fxml"));
         Parent board = loader.load();
