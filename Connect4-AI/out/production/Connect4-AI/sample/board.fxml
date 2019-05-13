@@ -10,7 +10,7 @@
    <children>
       <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="600.0" fitWidth="600.0" onMouseClicked="#onMouseClick" pickOnBounds="true">
+            <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true">
                <image>
                   <Image url="@board.png" />
                </image>

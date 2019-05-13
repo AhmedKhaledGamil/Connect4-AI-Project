@@ -14,6 +14,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Connect 4");
         primaryStage.setScene(new Scene(menu, 600, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

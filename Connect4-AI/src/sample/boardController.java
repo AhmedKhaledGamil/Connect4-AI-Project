@@ -1,14 +1,22 @@
 package sample;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Arrays;
+
 
 public class boardController
 {
+
+    // Defining AI LOGIC behind the game
+    private Logic AI = new Logic();
+    // Board values = 0 (Empty), = 1 (Player), = 2 (AI)
+    private int[][] board = AI.createBoardMatrix();
+
+
     // AnchorPane used in the scene
     public AnchorPane anchorPane;
     public Button btn1;
@@ -25,13 +33,19 @@ public class boardController
     private Image yellow_coin = new Image("sample/yellow_circle.png");
 
 
-    // Player first = 1, AI first = 0, Default is player first!
-    private int player_or_ai = 1;
+    // Player turn = true, AI turn = false, Default is player first!
+    private boolean player_or_ai = true;
 
     // Red coin turn (true) or Yellow coin turn (false), Default Red is first!
     private boolean red_or_yellow = true;
 
+    // Used to determine difficulty
+    private String difficulty = "Random";
+
     // Variables used for dynamic creation
+    // All calculations are based and limited to the board size
+    private double center_to_center_distance = 97.5;
+
     private double column1_y = 505;
     private int column1_row_count = 6;
     private double column2_y = 505;
@@ -48,155 +62,258 @@ public class boardController
     private int column7_row_count = 6;
 
 
+    // Always constant
+    private int col1_x_pos = 5;
+    private int col2_x_pos = 90;
+    private int col3_x_pos = 175;
+    private int col4_x_pos = 260;
+    private int col5_x_pos = 345;
+    private int col6_x_pos = 430;
+    private int col7_x_pos = 515;
 
-
-    public void onMouseClick()
-    {
-        System.out.println("Image clicked!");
-        System.out.println(player_or_ai);
-    }
 
     private void toggleColor()
     {
         red_or_yellow = !red_or_yellow;
     }
 
-    public void setFirst(int value)
+    private void changeTurn() { player_or_ai = !player_or_ai;}
+
+    public void setFirst(boolean value)
     {
         player_or_ai = value;
+        if(!player_or_ai)
+            AITurn();
     }
 
-    public void column1_pressed(ActionEvent event)
+
+    private void adjustBoard(int col)
     {
-        // x = 5 , col = 1 always in column1
-        if (red_or_yellow)
-        {
-            create_newImageView(red_coin,column1_row_count,1, 5, column1_y);
-            toggleColor();
-        }
+        int board_value;
+        if(player_or_ai)
+            board_value = 1;
         else
+            board_value = 2;
+        switch (col)
         {
-            create_newImageView(yellow_coin,column1_row_count,1, 5, column1_y);
-            toggleColor();
+            case 1:
+                column1_y = column1_y - center_to_center_distance;
+                column1_row_count = column1_row_count - 1;
+                board[column1_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 2:
+                column2_y = column2_y - center_to_center_distance;
+                column2_row_count = column2_row_count - 1;
+                board[column2_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 3:
+                column3_y = column3_y - center_to_center_distance;
+                column3_row_count = column3_row_count - 1;
+                board[column3_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 4:
+                column4_y = column4_y - center_to_center_distance;
+                column4_row_count = column4_row_count - 1;
+                board[column4_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 5:
+                column5_y = column5_y - center_to_center_distance;
+                column5_row_count = column5_row_count - 1;
+                board[column5_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 6:
+                column6_y = column6_y - center_to_center_distance;
+                column6_row_count = column6_row_count - 1;
+                board[column6_row_count][col-1] = board_value;
+                changeTurn();
+                break;
+            case 7:
+                column7_y = column7_y - center_to_center_distance;
+                column7_row_count = column7_row_count - 1;
+                board[column7_row_count][col-1] = board_value;
+                changeTurn();
+                break;
         }
-        column1_y = column1_y - 97.5;
-        column1_row_count = column1_row_count - 1;
+
     }
 
-    public void column2_pressed(ActionEvent event)
+    private void AITurn()
     {
-        // x = 90 , col = 2 always in column2
-        if (red_or_yellow)
+        if(difficulty.equals("Random"))
         {
-            create_newImageView(red_coin,column2_row_count,2, 90, column2_y);
-            toggleColor();
+            // Parameters used!
+            int col_index = AI.random_move();
+            int row_count;
+            double x;
+
+            switch (col_index)
+            {
+                case 1:
+                    row_count = column1_row_count;
+                    x = col1_x_pos;
+                    insertCoin(row_count,col_index,x,column1_y);
+                    adjustBoard(col_index);
+                    break;
+                case 2:
+                    row_count = column2_row_count;
+                    x = col2_x_pos;
+                    insertCoin(row_count,col_index,x,column2_y);
+                    adjustBoard(col_index);
+                    break;
+                case 3:
+                    row_count = column3_row_count;
+                    x = col3_x_pos;
+                    insertCoin(row_count,col_index,x,column3_y);
+                    adjustBoard(col_index);
+                    break;
+                case 4:
+                    row_count = column4_row_count;
+                    x = col4_x_pos;
+                    insertCoin(row_count,col_index,x,column4_y);
+                    adjustBoard(col_index);
+                    break;
+                case 5:
+                    row_count = column5_row_count;
+                    x = col5_x_pos;
+                    insertCoin(row_count,col_index,x,column5_y);
+                    adjustBoard(col_index);
+                    break;
+                case 6:
+                    row_count = column6_row_count;
+                    x = col6_x_pos;
+                    insertCoin(row_count,col_index,x,column6_y);
+                    adjustBoard(col_index);
+                    break;
+                case 7:
+                    row_count = column7_row_count;
+                    x = col7_x_pos;
+                    insertCoin(row_count,col_index,x,column7_y);
+                    adjustBoard(col_index);
+                    break;
+            }
         }
-        else
-        {
-            create_newImageView(yellow_coin,column2_row_count,2, 90, column2_y);
-            toggleColor();
-        }
-        column2_y = column2_y - 97.5;
-        column2_row_count = column2_row_count - 1;
     }
 
-    public void column3_pressed(ActionEvent event)
+    public void column1_pressed()
     {
-        // x = 175 , col = 3 always in column3
-        if (red_or_yellow)
+        if(player_or_ai && column1_row_count > 0)
         {
-            create_newImageView(red_coin,column3_row_count,3, 175, column3_y);
-            toggleColor();
+            // x = 5 , col = 1 always in column1
+            int col1_index = 1;
+            insertCoin(column1_row_count, col1_index, col1_x_pos, column1_y);
+            adjustBoard(col1_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
         }
-        else
-        {
-            create_newImageView(yellow_coin,column3_row_count,3, 175, column3_y);
-            toggleColor();
-        }
-        column3_y = column3_y - 97.5;
-        column3_row_count = column3_row_count - 1;
     }
 
-    public void column4_pressed(ActionEvent event)
+    public void column2_pressed()
     {
-        // x = 260 , col = 4 always in column4
-        if (red_or_yellow)
+        if(player_or_ai && column2_row_count > 0)
         {
-            create_newImageView(red_coin,column4_row_count,4, 260, column4_y);
-            toggleColor();
+            // x = 90 , col = 2 always in column2
+            int col2_index = 2;
+            insertCoin(column2_row_count, col2_index, col2_x_pos, column2_y);
+            adjustBoard(col2_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
         }
-        else
-        {
-            create_newImageView(yellow_coin,column4_row_count,4, 260, column4_y);
-            toggleColor();
-        }
-        column4_y = column4_y - 97.5;
-        column4_row_count = column4_row_count - 1;
     }
 
-    public void column5_pressed(ActionEvent event)
+    public void column3_pressed()
     {
-        // x = 345 , col = 5 always in column5
-        if (red_or_yellow)
+        if(player_or_ai && column3_row_count > 0)
         {
-            create_newImageView(red_coin,column5_row_count,5, 345, column5_y);
-            toggleColor();
+            // x = 175 , col = 3 always in column3
+            int col3_index = 3;
+            insertCoin(column3_row_count, col3_index, col3_x_pos, column3_y);
+            adjustBoard(col3_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
         }
-        else
-        {
-            create_newImageView(yellow_coin,column5_row_count,5, 345, column5_y);
-            toggleColor();
-        }
-        column5_y = column5_y - 97.5;
-        column5_row_count = column5_row_count - 1;
     }
 
-    public void column6_pressed(ActionEvent event)
+    public void column4_pressed()
     {
-        // x = 430 , col = 6 always in column6
-        if (red_or_yellow)
+        if (player_or_ai && column4_row_count > 0)
         {
-            create_newImageView(red_coin,column6_row_count,6, 430, column6_y);
-            toggleColor();
+            // x = 260 , col = 4 always in column4
+            int col4_index = 4;
+            insertCoin(column4_row_count, col4_index, col4_x_pos, column4_y);
+            adjustBoard(col4_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
         }
-        else
-        {
-            create_newImageView(yellow_coin,column6_row_count,6, 430, column6_y);
-            toggleColor();
-        }
-        column6_y = column6_y - 97.5;
-        column6_row_count = column6_row_count - 1;
     }
 
-    public void column7_pressed(ActionEvent event)
+    public void column5_pressed()
     {
-        // x = 515 , col = 7 always in column7
-        if (red_or_yellow)
+        if (player_or_ai && column5_row_count > 0)
         {
-            create_newImageView(red_coin,column7_row_count,7, 515, column7_y);
-            toggleColor();
+            // x = 345 , col = 5 always in column5
+            int col5_index = 5;
+            insertCoin(column5_row_count, col5_index, col5_x_pos, column5_y);
+            adjustBoard(col5_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
         }
-        else
-        {
-            create_newImageView(yellow_coin,column7_row_count,7, 515, column7_y);
-            toggleColor();
-        }
-        column7_y = column7_y - 97.5;
-        column7_row_count = column7_row_count - 1;
     }
 
+    public void column6_pressed()
+    {
+        if (player_or_ai && column6_row_count > 0)
+        {
+            // x = 430 , col = 6 always in column6
+            int col6_index = 6;
+            insertCoin(column6_row_count, col6_index, col6_x_pos, column6_y);
+            adjustBoard(col6_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
+        }
+    }
+
+    public void column7_pressed()
+    {
+        if (player_or_ai && column7_row_count > 0) {
+            // x = 515 , col = 7 always in column7
+            int col7_index = 7;
+            insertCoin(column7_row_count, col7_index, col7_x_pos, column7_y);
+            adjustBoard(col7_index);
+            AITurn();
+            System.out.println(Arrays.deepToString(board));
+        }
+    }
+
+
+    private void insertCoin(int row, int col, double x, double y)
+    {
+        if (red_or_yellow) {
+            create_newImageView(red_coin, row, col, x, y);
+            toggleColor();
+        } else {
+            create_newImageView(yellow_coin, row, col, x, y);
+            toggleColor();
+        }
+    }
 
     private void create_newImageView(Image image,int row, int col, double x, double y)
     {
         ImageView imageView = new ImageView();
         imageView.setId(String.format("pos_%s%s", row, col));
-        imageView.setFitHeight(80);
-        imageView.setFitWidth(80);
+        double coin_height = 80;
+        imageView.setFitHeight(coin_height);
+        double coin_width = 80;
+        imageView.setFitWidth(coin_width);
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setOpacity(1);
+        imageView.setOpacity(1); // 0 (Min) -> 1 (Max), a double value that can take fractions.
         imageView.setImage(image);
         anchorPane.getChildren().add(imageView);
         switch (col)

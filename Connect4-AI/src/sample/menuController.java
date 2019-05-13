@@ -41,8 +41,8 @@ public class menuController
             if(ai_id.isSelected())
             {
                 boardController controller = loader.getController();
-                // AI first = 0
-                controller.setFirst(0);
+                // AI turn first = false
+                controller.setFirst(false);
             }
             window.setScene(boardScene);
             window.show();
