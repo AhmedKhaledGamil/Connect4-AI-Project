@@ -5,9 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-import java.time.Duration;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 
 public class boardController
@@ -26,7 +24,7 @@ public class boardController
 //    int temp[] = AI.minimax(0,3,0,3,true,values,AI.MIN,AI.MAX);
 
     // Board values = 0 (Empty), = 1 (Player), = 2 (AI)
-    public int[][] board = AI.createBoardMatrix();
+    private Board board = new Board(6,7);
 
     // AI Difficulty Type, Random, Evaluated!
     // Used to determine difficulty
@@ -61,8 +59,6 @@ public class boardController
 
     // Variables used for dynamic creation
     // All calculations are based and limited to the board size
-    private double center_to_center_distance = 97.5;
-
     private double column1_y = 505;
     private int column1_row_count = 6;
     private double column2_y = 505;
@@ -114,54 +110,55 @@ public class boardController
             board_value = 1;
         else
             board_value = 2;
+        double center_to_center_distance = 97.5;
         switch (col)
         {
             case 1:
                 column1_y -= center_to_center_distance;
                 column1_row_count -= 1;
-                board[column1_row_count][col-1] = board_value;
+                board.setXY(column1_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 2:
                 column2_y -= center_to_center_distance;
                 column2_row_count -= 1;
-                board[column2_row_count][col-1] = board_value;
+                board.setXY(column2_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 3:
                 column3_y -= center_to_center_distance;
                 column3_row_count -= 1;
-                board[column3_row_count][col-1] = board_value;
+                board.setXY(column3_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 4:
                 column4_y -= center_to_center_distance;
                 column4_row_count -= 1;
-                board[column4_row_count][col-1] = board_value;
+                board.setXY(column4_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 5:
                 column5_y -= center_to_center_distance;
                 column5_row_count -= 1;
-                board[column5_row_count][col-1] = board_value;
+                board.setXY(column5_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 6:
                 column6_y -= center_to_center_distance;
                 column6_row_count -= 1;
-                board[column6_row_count][col-1] = board_value;
+                board.setXY(column6_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
             case 7:
                 column7_y -= center_to_center_distance;
                 column7_row_count -= 1;
-                board[column7_row_count][col-1] = board_value;
+                board.setXY(column7_row_count,col-1,board_value);
                 changeTurn();
                 //printCols();
                 break;
@@ -235,6 +232,8 @@ public class boardController
             }
             else {
                 System.out.println("El3ab Baleh!");
+                Board[] possibleBoards = AI.createPossibleBoards(board,1,7);
+                System.out.println(Arrays.deepToString(board.getBoard()));
             }
         }
     }
@@ -248,7 +247,7 @@ public class boardController
             insertCoin(column1_row_count, col1_index, col1_x_pos, column1_y);
             adjustBoard(col1_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board.getBoard()));
         }
     }
 
@@ -261,7 +260,7 @@ public class boardController
             insertCoin(column2_row_count, col2_index, col2_x_pos, column2_y);
             adjustBoard(col2_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
@@ -274,7 +273,7 @@ public class boardController
             insertCoin(column3_row_count, col3_index, col3_x_pos, column3_y);
             adjustBoard(col3_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
@@ -287,7 +286,7 @@ public class boardController
             insertCoin(column4_row_count, col4_index, col4_x_pos, column4_y);
             adjustBoard(col4_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
@@ -300,7 +299,7 @@ public class boardController
             insertCoin(column5_row_count, col5_index, col5_x_pos, column5_y);
             adjustBoard(col5_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
@@ -313,7 +312,7 @@ public class boardController
             insertCoin(column6_row_count, col6_index, col6_x_pos, column6_y);
             adjustBoard(col6_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
@@ -325,7 +324,7 @@ public class boardController
             insertCoin(column7_row_count, col7_index, col7_x_pos, column7_y);
             adjustBoard(col7_index);
             AITurn();
-            System.out.println(Arrays.deepToString(board));
+            //System.out.println(Arrays.deepToString(board));
         }
     }
 
