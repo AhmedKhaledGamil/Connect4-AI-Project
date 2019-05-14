@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 
 public class boardController
@@ -25,6 +27,13 @@ public class boardController
 
     // Board values = 0 (Empty), = 1 (Player), = 2 (AI)
     public int[][] board = AI.createBoardMatrix();
+
+    // AI Difficulty Type, Random, Evaluated!
+    // Used to determine difficulty
+    private String difficulty = "Evaluated";
+
+    // Used only at AI if it plays First!, default false.
+    private boolean ai_first_turn = false;
 
 
     // AnchorPane used in the scene
@@ -49,8 +58,6 @@ public class boardController
     // Red coin turn (true) or Yellow coin turn (false), Default Red is first!
     private boolean red_or_yellow = true;
 
-    // Used to determine difficulty
-    private String difficulty = "Random";
 
     // Variables used for dynamic creation
     // All calculations are based and limited to the board size
@@ -93,8 +100,10 @@ public class boardController
     {
 //        System.out.println(Arrays.toString(temp)); // Used in minimax testing!
         player_or_ai = value;
-        if(!player_or_ai)
+        if(!player_or_ai) {
+            ai_first_turn = true;
             AITurn();
+        }
     }
 
 
@@ -160,63 +169,73 @@ public class boardController
 
     }
 
-    private void AITurn()
-    {
-        int col_index = AI.random_move();
-        while(true)
-        {
-            if(isValidMove(col_index))
-                break;
-            else
-                col_index = AI.random_move();
-        }
-        int row_count;
-        double x;
+    private void AITurn() {
+        if(difficulty.equals("Random")) {
+            int col_index = AI.random_move();
+            while (true) {
+                if (isValidMove(col_index))
+                    break;
+                else
+                    col_index = AI.random_move();
+            }
+            int row_count;
+            double x;
 
-        switch (col_index)
-        {
-            case 1:
-                row_count = column1_row_count;
-                x = col1_x_pos;
-                insertCoin(row_count,col_index,x,column1_y);
-                adjustBoard(col_index);
-                break;
-            case 2:
-                row_count = column2_row_count;
-                x = col2_x_pos;
-                insertCoin(row_count,col_index,x,column2_y);
-                adjustBoard(col_index);
-                break;
-            case 3:
-                row_count = column3_row_count;
-                x = col3_x_pos;
-                insertCoin(row_count,col_index,x,column3_y);
-                adjustBoard(col_index);
-                break;
-            case 4:
-                row_count = column4_row_count;
-                x = col4_x_pos;
-                insertCoin(row_count,col_index,x,column4_y);
-                adjustBoard(col_index);
-                break;
-            case 5:
-                row_count = column5_row_count;
-                x = col5_x_pos;
-                insertCoin(row_count,col_index,x,column5_y);
-                adjustBoard(col_index);
-                break;
-            case 6:
-                row_count = column6_row_count;
-                x = col6_x_pos;
-                insertCoin(row_count,col_index,x,column6_y);
-                adjustBoard(col_index);
-                break;
-            case 7:
-                row_count = column7_row_count;
-                x = col7_x_pos;
-                insertCoin(row_count,col_index,x,column7_y);
-                adjustBoard(col_index);
-                break;
+            switch (col_index) {
+                case 1:
+                    row_count = column1_row_count;
+                    x = col1_x_pos;
+                    insertCoin(row_count, col_index, x, column1_y);
+                    adjustBoard(col_index);
+                    break;
+                case 2:
+                    row_count = column2_row_count;
+                    x = col2_x_pos;
+                    insertCoin(row_count, col_index, x, column2_y);
+                    adjustBoard(col_index);
+                    break;
+                case 3:
+                    row_count = column3_row_count;
+                    x = col3_x_pos;
+                    insertCoin(row_count, col_index, x, column3_y);
+                    adjustBoard(col_index);
+                    break;
+                case 4:
+                    row_count = column4_row_count;
+                    x = col4_x_pos;
+                    insertCoin(row_count, col_index, x, column4_y);
+                    adjustBoard(col_index);
+                    break;
+                case 5:
+                    row_count = column5_row_count;
+                    x = col5_x_pos;
+                    insertCoin(row_count, col_index, x, column5_y);
+                    adjustBoard(col_index);
+                    break;
+                case 6:
+                    row_count = column6_row_count;
+                    x = col6_x_pos;
+                    insertCoin(row_count, col_index, x, column6_y);
+                    adjustBoard(col_index);
+                    break;
+                case 7:
+                    row_count = column7_row_count;
+                    x = col7_x_pos;
+                    insertCoin(row_count, col_index, x, column7_y);
+                    adjustBoard(col_index);
+                    break;
+            }
+        }
+
+        else if(difficulty.equals("Evaluated")){
+            if(ai_first_turn){
+                // Insert Coin in the middle as First AI move always!
+                insertCoin(column4_row_count,4,col4_x_pos,column4_y);
+                adjustBoard(4);
+            }
+            else {
+                System.out.println("El3ab Baleh!");
+            }
         }
     }
 

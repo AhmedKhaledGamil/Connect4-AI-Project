@@ -39,20 +39,8 @@ public class Logic
 
 
 
-    /*
-    Returns optimal value and which column
-    Initiall called for root
-    Maximizer at root
-    Initially called for root
-    Start -> Start at which level
-    Depth -> Go to which level
-    Index -> Which Child
-    Max or Min -> true for max, false for min
-    Values -> input
-    Alpha and Beta used for pruning
-    */
 
-    int[] minimax(int start, int depth, int index,int num_children_nodes,
+    public int[] minimax(int start, int depth, int index,int num_children_nodes,
                 boolean max_or_min,
                 int[] values, int alpha, int beta){
 
@@ -109,5 +97,15 @@ public class Logic
             return_value[0] = best;
             return return_value;
         }
+    }
+
+
+    public int evaluateBoard(int[][]board)
+    {
+        // Middle Column!
+        int position = 3;
+
+
+        return position;
     }
 }
