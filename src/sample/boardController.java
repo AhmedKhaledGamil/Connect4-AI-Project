@@ -232,8 +232,9 @@ public class boardController
             }
             else {
                 System.out.println("El3ab Baleh!");
-                Board[] possibleBoards = AI.createPossibleBoards(board,1,7);
-                System.out.println(Arrays.deepToString(board.getBoard()));
+                Tree root = AI.createTree(board);
+                //Board[] possibleBoards = AI.createPossibleBoards(board,7);
+                //System.out.println(Arrays.deepToString(board.getBoard()));
             }
         }
     }

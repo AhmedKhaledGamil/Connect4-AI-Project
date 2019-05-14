@@ -17,8 +17,12 @@ public class Board {
         return this.class_board;
     }
 
-    public void setBoard(int[][] board) {
-        this.class_board = board;
+    public void setBoard(Board board) {
+        for (int j = 0; j < board.getRow_count() ; j++) {
+            for (int k = 0; k < board.getCol_count() ; k++) {
+                this.setXY(j,k,board.getXY(j,k));
+            }
+        }
     }
 
     public int[][] initializeBoard() {

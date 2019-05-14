@@ -11,6 +11,18 @@ public class Logic
     int MAX = 10000;
     int MIN = -10000;
 
+    // AI token = 2
+    int token = 2;
+
+
+    public void toggleToken()
+    {
+        if(token == 2)
+            token = 1;
+        else if(token == 1)
+            token = 2;
+    }
+
 
     public int random_move()
     {
@@ -82,39 +94,48 @@ public class Logic
 
 
 
-    public Board[] createPossibleBoards(final Board board, int depth, int num_children_nodes){
-        Board[] possibleBoard = new Board[num_children_nodes];
+    // Currently not working, in progress!
+    public Board[] createPossibleBoards(final Board board, int num_children_nodes){
+        Board[] possibleBoards = new Board[num_children_nodes];
         for (int i = 0; i < num_children_nodes; i++) {
-            possibleBoard[i] = new Board(6,7);
-            for (int j = 0; j < board.getRow_count() ; j++) {
-                for (int k = 0; k < board.getCol_count() ; k++) {
-                    possibleBoard[i].setXY(j,k,board.getXY(j,k));
+            possibleBoards[i] = new Board(6,7);
+            possibleBoards[i].setBoard(board);
+        }
+        int row;
+        for (int i = 0; i < board.getCol_count() ; i++) {
+            row = getColPos(possibleBoards[i],i);
+            if(row != 0)
+                possibleBoards[i].setXY(row,i,token);
+        }
+        for (int m = 0; m <num_children_nodes ; m++) {
+            System.out.println(Arrays.deepToString(possibleBoards[m].getBoard()));
+        }
+        System.out.println("---------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------");
+
+        return possibleBoards;
+    }
+
+
+    public Tree createTree(Board board){
+        Tree temp = new Tree(board);
+        Board[] temp1 = createPossibleBoards(temp.getBoard(),7);
+        for (int i = 0; i < 7; i++) {
+            temp.children[i] = new Tree(temp1[i]);
+            toggleToken();
+            Board [] temp2 = createPossibleBoards(temp.children[i].getBoard(),7);
+            for (int j = 0; j < 7; j++) {
+                temp.children[i].children[j] = new Tree(temp2[j]);
+                toggleToken();
+                Board[] temp3 = createPossibleBoards(temp.children[i].children[j].getBoard(),7);
+                for (int k = 0; k < 7; k++) {
+                    temp.children[i].children[j].children[k] = new Tree(temp3[k]);
                 }
             }
         }
-//        for (int m = 0; m <num_children_nodes ; m++) {
-//            System.out.println(Arrays.deepToString(possibleBoard[m].getBoard()));
-//        }
-//        System.out.println("---------------------------------------------------------------------" +
-//                "--------------------------------------------------------------------------------");
-
-        int row;
-        for (int i = 0; i < board.getCol_count() ; i++) {
-            row = getColPos(possibleBoard[i],i);
-            if(row != 0)
-                possibleBoard[i].setXY(row,i,2);
-        }
-//        System.out.println(Arrays.deepToString(board.getBoard()));
-//        System.out.println("---------------------------------------------------------------------" +
-//                "--------------------------------------------------------------------------------");
-//        for (int m = 0; m <num_children_nodes ; m++) {
-//            System.out.println(Arrays.deepToString(possibleBoard[m].getBoard()));
-//        }
-//        System.out.println("---------------------------------------------------------------------" +
-//                "--------------------------------------------------------------------------------");
-
-        return possibleBoard;
+        return temp;
     }
+
 
    int getColPos(Board board, int col){
         int pos = 0;
