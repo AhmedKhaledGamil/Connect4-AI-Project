@@ -13,8 +13,18 @@ public class boardController
 
     // Defining AI LOGIC behind the game
     private Logic AI = new Logic();
+
+//    // Answer is 15
+//    int[] values = {-7,17,11,-13,-18,18,-13,-16,15,-9,-14,7,-2,12,9,7,-11,-15,-17,10,-9,12,15,-3,13,-12,-1};
+
+//    // Answer is 12
+//    int[]values = {3,12,8,-4,9,-2,16,6,10,-2,16,6,-11,18,9,17,-1,-2,-8,-2,-16,8,15,9,-6,-14,9,12,-5,-8,-3,10,-5,1,8,-15,10,-10,-13,4
+//    ,9,1,2,-2,0,-19,20,5,17,3,-10,14,-5,-13,-1,11,-17,-12,18,4,-16,3,8,-9};
+
+//    int temp[] = AI.minimax(0,3,0,3,true,values,AI.MIN,AI.MAX);
+
     // Board values = 0 (Empty), = 1 (Player), = 2 (AI)
-    private int[][] board = AI.createBoardMatrix();
+    public int[][] board = AI.createBoardMatrix();
 
 
     // AnchorPane used in the scene
@@ -81,6 +91,7 @@ public class boardController
 
     public void setFirst(boolean value)
     {
+//        System.out.println(Arrays.toString(temp)); // Used in minimax testing!
         player_or_ai = value;
         if(!player_or_ai)
             AITurn();
@@ -97,46 +108,53 @@ public class boardController
         switch (col)
         {
             case 1:
-                column1_y = column1_y - center_to_center_distance;
-                column1_row_count = column1_row_count - 1;
+                column1_y -= center_to_center_distance;
+                column1_row_count -= 1;
                 board[column1_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 2:
-                column2_y = column2_y - center_to_center_distance;
-                column2_row_count = column2_row_count - 1;
+                column2_y -= center_to_center_distance;
+                column2_row_count -= 1;
                 board[column2_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 3:
-                column3_y = column3_y - center_to_center_distance;
-                column3_row_count = column3_row_count - 1;
+                column3_y -= center_to_center_distance;
+                column3_row_count -= 1;
                 board[column3_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 4:
-                column4_y = column4_y - center_to_center_distance;
-                column4_row_count = column4_row_count - 1;
+                column4_y -= center_to_center_distance;
+                column4_row_count -= 1;
                 board[column4_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 5:
-                column5_y = column5_y - center_to_center_distance;
-                column5_row_count = column5_row_count - 1;
+                column5_y -= center_to_center_distance;
+                column5_row_count -= 1;
                 board[column5_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 6:
-                column6_y = column6_y - center_to_center_distance;
-                column6_row_count = column6_row_count - 1;
+                column6_y -= center_to_center_distance;
+                column6_row_count -= 1;
                 board[column6_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
             case 7:
-                column7_y = column7_y - center_to_center_distance;
-                column7_row_count = column7_row_count - 1;
+                column7_y -= center_to_center_distance;
+                column7_row_count -= 1;
                 board[column7_row_count][col-1] = board_value;
                 changeTurn();
+                //printCols();
                 break;
         }
 
@@ -144,58 +162,61 @@ public class boardController
 
     private void AITurn()
     {
-        if(difficulty.equals("Random"))
+        int col_index = AI.random_move();
+        while(true)
         {
-            // Parameters used!
-            int col_index = AI.random_move();
-            int row_count;
-            double x;
+            if(isValidMove(col_index))
+                break;
+            else
+                col_index = AI.random_move();
+        }
+        int row_count;
+        double x;
 
-            switch (col_index)
-            {
-                case 1:
-                    row_count = column1_row_count;
-                    x = col1_x_pos;
-                    insertCoin(row_count,col_index,x,column1_y);
-                    adjustBoard(col_index);
-                    break;
-                case 2:
-                    row_count = column2_row_count;
-                    x = col2_x_pos;
-                    insertCoin(row_count,col_index,x,column2_y);
-                    adjustBoard(col_index);
-                    break;
-                case 3:
-                    row_count = column3_row_count;
-                    x = col3_x_pos;
-                    insertCoin(row_count,col_index,x,column3_y);
-                    adjustBoard(col_index);
-                    break;
-                case 4:
-                    row_count = column4_row_count;
-                    x = col4_x_pos;
-                    insertCoin(row_count,col_index,x,column4_y);
-                    adjustBoard(col_index);
-                    break;
-                case 5:
-                    row_count = column5_row_count;
-                    x = col5_x_pos;
-                    insertCoin(row_count,col_index,x,column5_y);
-                    adjustBoard(col_index);
-                    break;
-                case 6:
-                    row_count = column6_row_count;
-                    x = col6_x_pos;
-                    insertCoin(row_count,col_index,x,column6_y);
-                    adjustBoard(col_index);
-                    break;
-                case 7:
-                    row_count = column7_row_count;
-                    x = col7_x_pos;
-                    insertCoin(row_count,col_index,x,column7_y);
-                    adjustBoard(col_index);
-                    break;
-            }
+        switch (col_index)
+        {
+            case 1:
+                row_count = column1_row_count;
+                x = col1_x_pos;
+                insertCoin(row_count,col_index,x,column1_y);
+                adjustBoard(col_index);
+                break;
+            case 2:
+                row_count = column2_row_count;
+                x = col2_x_pos;
+                insertCoin(row_count,col_index,x,column2_y);
+                adjustBoard(col_index);
+                break;
+            case 3:
+                row_count = column3_row_count;
+                x = col3_x_pos;
+                insertCoin(row_count,col_index,x,column3_y);
+                adjustBoard(col_index);
+                break;
+            case 4:
+                row_count = column4_row_count;
+                x = col4_x_pos;
+                insertCoin(row_count,col_index,x,column4_y);
+                adjustBoard(col_index);
+                break;
+            case 5:
+                row_count = column5_row_count;
+                x = col5_x_pos;
+                insertCoin(row_count,col_index,x,column5_y);
+                adjustBoard(col_index);
+                break;
+            case 6:
+                row_count = column6_row_count;
+                x = col6_x_pos;
+                insertCoin(row_count,col_index,x,column6_y);
+                adjustBoard(col_index);
+                break;
+            case 7:
+                row_count = column7_row_count;
+                x = col7_x_pos;
+                insertCoin(row_count,col_index,x,column7_y);
+                adjustBoard(col_index);
+                break;
         }
     }
 
@@ -340,5 +361,54 @@ public class boardController
                 btn7.toFront();
                 break;
         }
+    }
+
+
+    private void printCols()
+    {
+        System.out.println(column1_row_count);
+        System.out.println(column2_row_count);
+        System.out.println(column3_row_count);
+        System.out.println(column4_row_count);
+        System.out.println(column5_row_count);
+        System.out.println(column6_row_count);
+        System.out.println(column7_row_count);
+        System.out.println("------------------------------------");
+    }
+
+    private boolean isValidMove(int col)
+    {
+        switch (col)
+        {
+            case 1:
+                if(column1_row_count > 0)
+                    return true;
+                break;
+            case 2:
+                if(column2_row_count > 0)
+                    return true;
+                break;
+            case 3:
+                if(column3_row_count > 0)
+                    return true;
+                break;
+            case 4:
+                if(column4_row_count > 0)
+                    return true;
+                break;
+            case 5:
+                if(column5_row_count > 0)
+                    return true;
+                break;
+            case 6:
+                if(column6_row_count > 0)
+                    return true;
+                break;
+            case 7:
+                if(column7_row_count > 0)
+                    return true;
+                break;
+        }
+        return false;
     }
 }
