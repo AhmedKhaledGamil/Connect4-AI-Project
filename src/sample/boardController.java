@@ -232,10 +232,56 @@ public class boardController
             }
             else {
                 Tree root = AI.createTree(board);
-                Long start = System.currentTimeMillis();
+                AI.printBoard(board);
+                //Long start = System.currentTimeMillis();
                 AI.parseTree(root);
-                System.out.println("Parsed the tree in"+ (System.currentTimeMillis()-start) + "milliseconds");
-                // int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
+                //System.out.println("Parsed the tree in "+ (System.currentTimeMillis()-start) + " milliseconds");
+                int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
+                System.out.println(Arrays.toString(value));
+                /*
+                col1: 0->48
+                col2: 49->97
+                col3: 98->146
+                col4: 147->195
+                col5: 196->244
+                col6: 245->293
+                col7: 294->342
+                */
+                if(value[1] >= 0 && value[1] <= 48)
+                {
+                    insertCoin(column1_row_count,1,col1_x_pos,column1_y);
+                    adjustBoard(1);
+                }
+                else if(value[1] >= 49 && value[1] <= 97)
+                {
+                    insertCoin(column2_row_count,2,col2_x_pos,column2_y);
+                    adjustBoard(2);
+                }
+                else if(value[1] >= 98 && value[1] <= 146)
+                {
+                    insertCoin(column3_row_count,3,col3_x_pos,column3_y);
+                    adjustBoard(3);
+                }
+                else if(value[1] >= 147 && value[1] <= 195)
+                {
+                    insertCoin(column4_row_count,4,col4_x_pos,column4_y);
+                    adjustBoard(4);
+                }
+                else if(value[1] >= 196 && value[1] <= 244)
+                {
+                    insertCoin(column5_row_count,5,col5_x_pos,column5_y);
+                    adjustBoard(5);
+                }
+                else if(value[1] >= 245 && value[1] <= 293)
+                {
+                    insertCoin(column6_row_count,6,col6_x_pos,column6_y);
+                    adjustBoard(6);
+                }
+                else if(value[1] >= 294 && value[1] <= 342)
+                {
+                    insertCoin(column7_row_count,7, col7_x_pos,column7_y);
+                    adjustBoard(7);
+                }
             }
         }
     }

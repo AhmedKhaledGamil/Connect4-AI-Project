@@ -51,23 +51,29 @@ public class Logic
                         board[row][column] == board[row][column + 2] &&
                         board[row][column] == board[row][column + 3]) {
                     score -= 1024;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row][column + 1] &&
                         board[row][column] == board[row][column + 2] &&
                         board[row][column] == board[row][column + 3]) {
                     score += 1024;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
                         board[row][column] == board[row][column + 1] &&
-                        board[row][column] == board[row][column + 2]) {
+                        board[row][column] == board[row][column + 2] &&
+                        board[row][column + 3] == 0) {
                     score -= 512;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row][column + 1] &&
-                        board[row][column] == board[row][column + 2]) {
+                        board[row][column] == board[row][column + 2] &&
+                        board[row][column + 3] == 0) {
                     score += 512;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -89,23 +95,27 @@ public class Logic
                         board[row][column] == board[row + 2][column] &&
                         board[row][column] == board[row + 3][column]) {
                     score -= 1024;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row + 1][column] &&
                         board[row][column] == board[row + 2][column] &&
                         board[row][column] == board[row + 3][column]) {
                     score += 1024;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
                         board[row][column] == board[row + 1][column] &&
                         board[row][column] == board[row + 2][column]) {
                     score -= 512;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row + 1][column] &&
                         board[row][column] == board[row + 2][column]) {
                     score += 512;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -127,23 +137,27 @@ public class Logic
                         board[row][column] == board[row + 2][column + 2] &&
                         board[row][column] == board[row + 3][column + 3]) {
                     score -= 1024;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row + 1][column + 1] &&
                         board[row][column] == board[row + 2][column + 2] &&
                         board[row][column] == board[row + 3][column + 3]) {
                     score += 1024;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
                         board[row][column] == board[row + 1][column + 1] &&
                         board[row][column] == board[row + 2][column + 2]) {
                     score -= 512;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row + 1][column + 1] &&
                         board[row][column] == board[row + 2][column + 2]) {
                     score += 512;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -165,23 +179,27 @@ public class Logic
                         board[row][column] == board[row - 2][column + 2] &&
                         board[row][column] == board[row - 3][column + 3]) {
                     score -= 1024;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row - 1][column + 1] &&
                         board[row][column] == board[row - 2][column + 2] &&
                         board[row][column] == board[row - 3][column + 3]) {
                     score += 1024;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
                         board[row][column] == board[row - 1][column + 1] &&
                         board[row][column] == board[row - 2][column + 2]) {
                     score -= 512;
+                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row - 1][column + 1] &&
                         board[row][column] == board[row - 2][column + 2]) {
                     score += 512;
+                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -212,16 +230,14 @@ public class Logic
 
 
     public int[] minimax(int start, int depth, int index,int num_children_nodes,
-                boolean max_or_min,
-                int[] values, int alpha, int beta){
-
+                boolean max_or_min, List<Integer> values, int alpha, int beta){
         int best;
         int old_best;
         int[] temp;
         int[] return_value = new int[2];
 
         if (start == depth) {
-            return_value[0] = values[index];
+            return_value[0] = values.get(index);
             return_value[1] = index;
             return return_value;
         }
