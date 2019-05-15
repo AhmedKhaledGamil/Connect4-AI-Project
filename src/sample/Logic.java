@@ -42,7 +42,7 @@ public class Logic
         int row;
         int column;
         // check for horizontal ->
-        for (row = 0; row < rows; row++) {
+        for (row = rows - 1; row > 0; row--) {
             for (column = 0; column < cols - 3; column++) {
 
                 if (board[row][column] == 1 &&
@@ -174,84 +174,84 @@ public class Logic
         }
 
         // check for a diagonal win (positive slope)
-        for (row = 0; row < rows - 3; row++) {
+        for (row = rows - 1; row > rows - 4; row--) {
             for (column = 0; column < cols - 3; column++) {
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row][column] == board[row + 2][column + 2] &&
-                        board[row][column] == board[row + 3][column + 3]) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row][column] == board[row - 3][column + 3]) {
                     score -= 2048;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row][column] == board[row + 2][column + 2] &&
-                        board[row][column] == board[row + 3][column + 3]) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row][column] == board[row - 3][column + 3]) {
                     score += 1024;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row][column] == board[row + 2][column + 2] &&
-                        board[row + 3][column + 3] == 0) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row - 3][column + 3] == 0) {
                     score -= 1024;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row][column] == board[row + 2][column + 2] &&
-                        board[row + 3][column + 3] == 0) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row - 3][column + 3] == 0) {
                     score += 512;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row + 2][column + 2] == 0) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row - 2][column + 2] == 0) {
                     score -= 512;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column + 1] &&
-                        board[row + 2][column + 2] == 0) {
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row - 2][column + 2] == 0) {
                     score += 256;
                 }
             }
         }
 
-        // check for a diagonal win (negative slope)
-        for (row = rows - 3; row < rows; row++) {
-            for (column = 0; column < cols - 3; column++) {
+        // check for a diagonal win (negative slope) <- Direction
+        for (row = rows - 1; row > rows - 4; row--) {
+            for (column = cols - 1; column > cols - 5; column--) {
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row][column] == board[row - 2][column + 2] &&
-                        board[row][column] == board[row - 3][column + 3]) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row][column] == board[row - 2][column - 2] &&
+                        board[row][column] == board[row - 3][column - 3]) {
                     score -= 2048;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row][column] == board[row - 2][column + 2] &&
-                        board[row][column] == board[row - 3][column + 3]) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row][column] == board[row - 2][column - 2] &&
+                        board[row][column] == board[row - 3][column - 3]) {
                     score += 1024;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row][column] == board[row - 2][column + 2] &&
-                        board[row - 3][column + 3] == 0) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row][column] == board[row - 2][column - 2] &&
+                        board[row - 3][column - 3] == 0) {
                     score -= 1024;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row][column] == board[row - 2][column + 2] &&
-                        board[row - 3][column + 3] == 0) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row][column] == board[row - 2][column - 2] &&
+                        board[row - 3][column - 3] == 0) {
                     score += 512;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row - 2][column + 2] == 0) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row - 2][column - 2] == 0) {
                     score -= 512;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row - 1][column + 1] &&
-                        board[row - 2][column + 2] == 0) {
+                        board[row][column] == board[row - 1][column - 1] &&
+                        board[row - 2][column - 2] == 0) {
                     score += 256;
                 }
             }
