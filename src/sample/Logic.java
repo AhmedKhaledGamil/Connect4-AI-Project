@@ -56,7 +56,6 @@ public class Logic
                         board[row][column] == board[row][column + 2] &&
                         board[row][column] == board[row][column + 3]) {
                     score += 1024;
-                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -140,14 +139,12 @@ public class Logic
                         board[row][column] == board[row - 2][column] &&
                         board[row][column] == board[row - 3][column]) {
                     score -= 2048;
-                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row - 1][column] &&
                         board[row][column] == board[row - 2][column] &&
                         board[row][column] == board[row - 3][column]) {
                     score += 1024;
-                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -155,14 +152,12 @@ public class Logic
                         board[row][column] == board[row - 2][column] &&
                         board[row - 3][column] == 0) {
                     score -= 1024;
-                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row - 1][column] &&
                         board[row][column] == board[row - 2][column] &&
                         board[row - 3][column] == 0) {
                     score += 512;
-                    continue;
                 }
 
                 if (board[row][column] == 1 &&
@@ -186,7 +181,6 @@ public class Logic
                         board[row][column] == board[row + 2][column + 2] &&
                         board[row][column] == board[row + 3][column + 3]) {
                     score -= 2048;
-                    continue;
                 }
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row + 1][column + 1] &&

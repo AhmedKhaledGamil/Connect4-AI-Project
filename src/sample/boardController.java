@@ -597,17 +597,18 @@ public class boardController
         }
 
         // check for a vertical win
-        for (row = 0; row < rows - 3; row++) {
+        for (row = rows - 1; row > rows - 4; row--) {
             for (column = 0; column < cols; column++) {
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column] &&
-                        board[row][column] == board[row + 3][column]) {
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column] &&
+                        board[row][column] == board[row - 3][column]) {
                     return 1;
-                } else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column] &&
-                        board[row][column] == board[row + 3][column]) {
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column] &&
+                        board[row][column] == board[row - 3][column]) {
                     return 2;
                 }
             }
