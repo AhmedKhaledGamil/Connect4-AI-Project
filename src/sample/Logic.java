@@ -1,27 +1,204 @@
 package sample;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Logic
 {
-
     // Initial Values of Alpha and Beta
 
     int MAX = 10000;
     int MIN = -10000;
 
-    // AI token = 2
-    int token = 2;
+    // Array used for minimax.
 
+    List<Integer> values = new ArrayList<>();
 
-    public void toggleToken()
-    {
-        if(token == 2)
-            token = 1;
-        else if(token == 1)
-            token = 2;
+    public List<Integer> getValues() {
+        return values;
     }
+
+    public void parseTree(Tree tree) {
+
+        if (tree.children == null) {
+            values.add(evaluation(tree.getBoard()));
+        }
+        else {
+            for (int i = 0; i < tree.children.length; i++) {
+                parseTree(tree.children[i]);
+            }
+        }
+
+    }
+
+    public int evaluation(Board b){
+
+        int rows = b.getRow_count(), cols = b.getCol_count();
+        int [][] board = b.getBoard();
+
+        int score = 0;
+        int row;
+        int column;
+        //printBoard(b);
+        // check for horizontal
+        for (row = 0; row < rows; row++) {
+            for (column = 0; column < cols - 3; column++) {
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column + 1] &&
+                        board[row][column] == board[row][column + 2] &&
+                        board[row][column] == board[row][column + 3]) {
+                    score -= 1024;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column + 1] &&
+                        board[row][column] == board[row][column + 2] &&
+                        board[row][column] == board[row][column + 3]) {
+                    score += 1024;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column + 1] &&
+                        board[row][column] == board[row][column + 2]) {
+                    score -= 512;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column + 1] &&
+                        board[row][column] == board[row][column + 2]) {
+                    score += 512;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column + 1]) {
+                    score -= 256;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column + 1]) {
+                    score += 256;
+                }
+            }
+        }
+
+        // check for a vertical win
+        for (row = 0; row < rows - 3; row++) {
+            for (column = 0; column < cols; column++) {
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column] &&
+                        board[row][column] == board[row + 2][column] &&
+                        board[row][column] == board[row + 3][column]) {
+                    score -= 1024;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column] &&
+                        board[row][column] == board[row + 2][column] &&
+                        board[row][column] == board[row + 3][column]) {
+                    score += 1024;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column] &&
+                        board[row][column] == board[row + 2][column]) {
+                    score -= 512;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column] &&
+                        board[row][column] == board[row + 2][column]) {
+                    score += 512;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column]) {
+                    score -= 256;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column]) {
+                    score += 256;
+                }
+            }
+        }
+
+        // check for a diagonal win (positive slope)
+        for (row = 0; row < rows - 3; row++) {
+            for (column = 0; column < cols - 3; column++) {
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column + 1] &&
+                        board[row][column] == board[row + 2][column + 2] &&
+                        board[row][column] == board[row + 3][column + 3]) {
+                    score -= 1024;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column + 1] &&
+                        board[row][column] == board[row + 2][column + 2] &&
+                        board[row][column] == board[row + 3][column + 3]) {
+                    score += 1024;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column + 1] &&
+                        board[row][column] == board[row + 2][column + 2]) {
+                    score -= 512;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column + 1] &&
+                        board[row][column] == board[row + 2][column + 2]) {
+                    score += 512;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row + 1][column + 1]) {
+                    score -= 256;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row + 1][column + 1]) {
+                    score += 256;
+                }
+            }
+        }
+
+        // check for a diagonal win (negative slope)
+        for (row = rows - 3; row < rows; row++) {
+            for (column = 0; column < cols - 3; column++) {
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row][column] == board[row - 3][column + 3]) {
+                    score -= 1024;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2] &&
+                        board[row][column] == board[row - 3][column + 3]) {
+                    score += 1024;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2]) {
+                    score -= 512;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row - 1][column + 1] &&
+                        board[row][column] == board[row - 2][column + 2]) {
+                    score += 512;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row - 1][column + 1]) {
+                    score -= 256;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row - 1][column + 1]) {
+                    score += 256;
+                }
+            }
+        }
+
+
+        return score;
+    }
+
 
 
     public int random_move()
@@ -31,6 +208,7 @@ public class Logic
         // Add 1 to get the desired range [1-7]
         return (rand.nextInt(7) + 1);
     }
+
 
 
     public int[] minimax(int start, int depth, int index,int num_children_nodes,
@@ -95,7 +273,7 @@ public class Logic
 
 
     // Currently not working, in progress!
-    public Board[] createPossibleBoards(final Board board, int num_children_nodes){
+    public Board[] createPossibleBoards(final Board board, int num_children_nodes,int token){
         Board[] possibleBoards = new Board[num_children_nodes];
         for (int i = 0; i < num_children_nodes; i++) {
             possibleBoards[i] = new Board(6,7);
@@ -107,11 +285,11 @@ public class Logic
             if(row != 0)
                 possibleBoards[i].setXY(row,i,token);
         }
-        for (int m = 0; m <num_children_nodes ; m++) {
-            System.out.println(Arrays.deepToString(possibleBoards[m].getBoard()));
-        }
-        System.out.println("---------------------------------------------------------------------" +
-                "--------------------------------------------------------------------------------");
+//        for (int m = 0; m <num_children_nodes ; m++) {
+//            System.out.println(Arrays.deepToString(possibleBoards[m].getBoard()));
+//        }
+//        System.out.println("---------------------------------------------------------------------" +
+//                "--------------------------------------------------------------------------------");
 
         return possibleBoards;
     }
@@ -119,15 +297,16 @@ public class Logic
 
     public Tree createTree(Board board){
         Tree temp = new Tree(board);
-        Board[] temp1 = createPossibleBoards(temp.getBoard(),7);
+        temp.setChildren();
+        Board[] temp1 = createPossibleBoards(temp.getBoard(),7,2);
         for (int i = 0; i < 7; i++) {
             temp.children[i] = new Tree(temp1[i]);
-            toggleToken();
-            Board [] temp2 = createPossibleBoards(temp.children[i].getBoard(),7);
+            temp.children[i].setChildren();
+            Board [] temp2 = createPossibleBoards(temp.children[i].getBoard(),7,1);
             for (int j = 0; j < 7; j++) {
                 temp.children[i].children[j] = new Tree(temp2[j]);
-                toggleToken();
-                Board[] temp3 = createPossibleBoards(temp.children[i].children[j].getBoard(),7);
+                temp.children[i].children[j].setChildren();
+                Board[] temp3 = createPossibleBoards(temp.children[i].children[j].getBoard(),7,2);
                 for (int k = 0; k < 7; k++) {
                     temp.children[i].children[j].children[k] = new Tree(temp3[k]);
                 }
@@ -148,5 +327,15 @@ public class Logic
             }
         }
         return pos;
+   }
+
+
+   void printBoard(Board board)
+   {
+       for (int i = 0; i < 6; i++) {
+           System.out.println(Arrays.toString(board.getBoard()[i]));
+       }
+       System.out.println("---------------------------------------------------------------------" +
+               "--------------------------------------------------------------------------------");
    }
 }

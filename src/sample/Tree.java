@@ -14,6 +14,10 @@ public class Tree {
 
     public Tree(Board board) {
         this.board.setBoard(board);
+//        this.children = new Tree[7];
+    }
+
+    public void setChildren() {
         this.children = new Tree[7];
     }
 }

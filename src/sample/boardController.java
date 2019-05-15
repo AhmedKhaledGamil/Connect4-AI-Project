@@ -231,10 +231,11 @@ public class boardController
                 adjustBoard(4);
             }
             else {
-                System.out.println("El3ab Baleh!");
                 Tree root = AI.createTree(board);
-                //Board[] possibleBoards = AI.createPossibleBoards(board,7);
-                //System.out.println(Arrays.deepToString(board.getBoard()));
+                Long start = System.currentTimeMillis();
+                AI.parseTree(root);
+                System.out.println("Parsed the tree in"+ (System.currentTimeMillis()-start) + "milliseconds");
+                // int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
             }
         }
     }
