@@ -235,7 +235,7 @@ public class boardController
             }
             else {
                 Tree root = AI.createTree(board);
-                AI.printBoard(board);
+                //AI.printBoard(board);
                 //Long start = System.currentTimeMillis();
                 AI.parseTree(root);
                 //System.out.println("Parsed the tree in "+ (System.currentTimeMillis()-start) + " milliseconds");
@@ -443,44 +443,43 @@ public class boardController
 
     private void create_newImageView(Image image,int row, int col, double x, double y)
     {
-
-            ImageView imageView = new ImageView();
-            imageView.setId(String.format("pos_%s%s", row, col));
-            double coin_height = 80;
-            imageView.setFitHeight(coin_height);
-            double coin_width = 80;
-            imageView.setFitWidth(coin_width);
-            imageView.setLayoutX(x);
-            imageView.setLayoutY(y);
-            imageView.setPickOnBounds(true);
-            imageView.setPreserveRatio(true);
-            imageView.setOpacity(1); // 0 (Min) -> 1 (Max), a double value that can take fractions.
-            imageView.setImage(image);
-            anchorPane.getChildren().add(imageView);
-            switch (col)
-            {
-                case 1:
-                    btn1.toFront();
-                    break;
-                case 2:
-                    btn2.toFront();
-                    break;
-                case 3:
-                    btn3.toFront();
-                    break;
-                case 4:
-                    btn4.toFront();
-                    break;
-                case 5:
-                    btn5.toFront();
-                    break;
-                case 6:
-                    btn6.toFront();
-                    break;
-                case 7:
-                    btn7.toFront();
-                    break;
-            }
+        ImageView imageView = new ImageView();
+        imageView.setId(String.format("pos_%s%s", row, col));
+        double coin_height = 80;
+        imageView.setFitHeight(coin_height);
+        double coin_width = 80;
+        imageView.setFitWidth(coin_width);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        imageView.setOpacity(1); // 0 (Min) -> 1 (Max), a double value that can take fractions.
+        imageView.setImage(image);
+        anchorPane.getChildren().add(imageView);
+        switch (col)
+        {
+            case 1:
+                btn1.toFront();
+                break;
+            case 2:
+                btn2.toFront();
+                break;
+            case 3:
+                btn3.toFront();
+                break;
+            case 4:
+                btn4.toFront();
+                break;
+            case 5:
+                btn5.toFront();
+                break;
+            case 6:
+                btn6.toFront();
+                break;
+            case 7:
+                btn7.toFront();
+                break;
+        }
     }
 
 

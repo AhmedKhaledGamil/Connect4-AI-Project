@@ -34,7 +34,7 @@ public class Logic
     }
 
     public int evaluation(Board b){
-
+        printBoard(b);
         int rows = b.getRow_count(), cols = b.getCol_count();
         int [][] board = b.getBoard();
 
@@ -88,42 +88,42 @@ public class Logic
         }
 
         // check for a vertical win
-        for (row = 0; row < rows - 3; row++) {
+        for (row = rows - 1; row > rows - 4; row--) {
             for (column = 0; column < cols; column++) {
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column] &&
-                        board[row][column] == board[row + 3][column]) {
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column] &&
+                        board[row][column] == board[row - 3][column]) {
                     score -= 1024;
                     continue;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column] &&
-                        board[row][column] == board[row + 3][column]) {
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column] &&
+                        board[row][column] == board[row - 3][column]) {
                     score += 1024;
                     continue;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column]) {
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column]) {
                     score -= 512;
                     continue;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column] &&
-                        board[row][column] == board[row + 2][column]) {
+                        board[row][column] == board[row - 1][column] &&
+                        board[row][column] == board[row - 2][column]) {
                     score += 512;
                     continue;
                 }
 
                 if (board[row][column] == 1 &&
-                        board[row][column] == board[row + 1][column]) {
+                        board[row][column] == board[row - 1][column]) {
                     score -= 256;
                 }
                 else if (board[row][column] == 2 &&
-                        board[row][column] == board[row + 1][column]) {
+                        board[row][column] == board[row - 1][column]) {
                     score += 256;
                 }
             }
