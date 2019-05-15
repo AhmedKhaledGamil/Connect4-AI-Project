@@ -239,6 +239,7 @@ public class boardController
             AI.parseTree(root);
             //System.out.println("Parsed the tree in "+ (System.currentTimeMillis()-start) + " milliseconds");
             int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
+            AI.values.clear();
             System.out.println(Arrays.toString(value));
             int x,y,z;
             z = value[1] % 7;
