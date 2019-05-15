@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent menu = FXMLLoader.load(getClass().getResource("menu.fxml"));
-
         primaryStage.setTitle("Connect 4");
         primaryStage.setScene(new Scene(menu, 600, 600));
         primaryStage.setResizable(false);
@@ -21,4 +21,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
