@@ -34,15 +34,14 @@ public class Logic
     }
 
     public int evaluation(Board b){
-        printBoard(b);
+        //printBoard(b);
         int rows = b.getRow_count(), cols = b.getCol_count();
         int [][] board = b.getBoard();
 
         int score = 0;
         int row;
         int column;
-        //printBoard(b);
-        // check for horizontal
+        // check for horizontal ->
         for (row = 0; row < rows; row++) {
             for (column = 0; column < cols - 3; column++) {
 
@@ -82,6 +81,52 @@ public class Logic
                 else if (board[row][column] == 2 &&
                         board[row][column] == board[row][column + 1] &&
                         board[row][column+2] == 0) {
+                    score += 256;
+                }
+            }
+        }
+
+
+        // check for horizontal <-
+        for (row = rows - 1; row > 0; row--) {
+            for (column = cols - 1; column > cols - 5; column--) {
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column] == board[row][column - 2] &&
+                        board[row][column] == board[row][column - 3]) {
+                    score -= 2048;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column] == board[row][column - 2] &&
+                        board[row][column] == board[row][column - 3]) {
+                    score += 1024;
+                    continue;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column] == board[row][column - 2] &&
+                        board[row][column - 3] == 0) {
+                    score -= 1024;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column] == board[row][column - 2] &&
+                        board[row][column - 3] == 0) {
+                    score += 512;
+                    continue;
+                }
+
+                if (board[row][column] == 1 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column - 2] == 0) {
+                    score -= 512;
+                }
+                else if (board[row][column] == 2 &&
+                        board[row][column] == board[row][column - 1] &&
+                        board[row][column - 2] == 0) {
                     score += 256;
                 }
             }

@@ -168,126 +168,163 @@ public class boardController
 
     }
 
-    private void AITurn() {
-        if(difficulty.equals("Random")) {
-            int col_index = AI.random_move();
-            while (true) {
-                if (isValidMove(col_index))
-                    break;
-                else
-                    col_index = AI.random_move();
-            }
-            int row_count;
-            double x;
-
-            switch (col_index) {
-                case 1:
-                    row_count = column1_row_count;
-                    x = col1_x_pos;
-                    insertCoin(row_count, col_index, x, column1_y);
-                    adjustBoard(col_index);
-                    break;
-                case 2:
-                    row_count = column2_row_count;
-                    x = col2_x_pos;
-                    insertCoin(row_count, col_index, x, column2_y);
-                    adjustBoard(col_index);
-                    break;
-                case 3:
-                    row_count = column3_row_count;
-                    x = col3_x_pos;
-                    insertCoin(row_count, col_index, x, column3_y);
-                    adjustBoard(col_index);
-                    break;
-                case 4:
-                    row_count = column4_row_count;
-                    x = col4_x_pos;
-                    insertCoin(row_count, col_index, x, column4_y);
-                    adjustBoard(col_index);
-                    break;
-                case 5:
-                    row_count = column5_row_count;
-                    x = col5_x_pos;
-                    insertCoin(row_count, col_index, x, column5_y);
-                    adjustBoard(col_index);
-                    break;
-                case 6:
-                    row_count = column6_row_count;
-                    x = col6_x_pos;
-                    insertCoin(row_count, col_index, x, column6_y);
-                    adjustBoard(col_index);
-                    break;
-                case 7:
-                    row_count = column7_row_count;
-                    x = col7_x_pos;
-                    insertCoin(row_count, col_index, x, column7_y);
-                    adjustBoard(col_index);
-                    break;
-            }
+    private void AIRandom() {
+        int col_index = AI.random_move();
+        while (true) {
+            if (isValidMove(col_index))
+                break;
+            else
+                col_index = AI.random_move();
         }
+        int row_count;
+        double x;
 
-        else if(difficulty.equals("Evaluated")){
-            if(ai_first_turn){
-                // Insert Coin in the middle as First AI move always!
-                ai_first_turn = false;
-                insertCoin(column4_row_count,4,col4_x_pos,column4_y);
-                adjustBoard(4);
-            }
-            else {
-                Tree root = AI.createTree(board);
-                //AI.printBoard(board);
-                //Long start = System.currentTimeMillis();
-                AI.parseTree(root);
-                //System.out.println("Parsed the tree in "+ (System.currentTimeMillis()-start) + " milliseconds");
-                int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
-                System.out.println(Arrays.toString(value));
+        switch (col_index) {
+            case 1:
+                row_count = column1_row_count;
+                x = col1_x_pos;
+                insertCoin(row_count, col_index, x, column1_y);
+                adjustBoard(col_index);
+                break;
+            case 2:
+                row_count = column2_row_count;
+                x = col2_x_pos;
+                insertCoin(row_count, col_index, x, column2_y);
+                adjustBoard(col_index);
+                break;
+            case 3:
+                row_count = column3_row_count;
+                x = col3_x_pos;
+                insertCoin(row_count, col_index, x, column3_y);
+                adjustBoard(col_index);
+                break;
+            case 4:
+                row_count = column4_row_count;
+                x = col4_x_pos;
+                insertCoin(row_count, col_index, x, column4_y);
+                adjustBoard(col_index);
+                break;
+            case 5:
+                row_count = column5_row_count;
+                x = col5_x_pos;
+                insertCoin(row_count, col_index, x, column5_y);
+                adjustBoard(col_index);
+                break;
+            case 6:
+                row_count = column6_row_count;
+                x = col6_x_pos;
+                insertCoin(row_count, col_index, x, column6_y);
+                adjustBoard(col_index);
+                break;
+            case 7:
+                row_count = column7_row_count;
+                x = col7_x_pos;
+                insertCoin(row_count, col_index, x, column7_y);
+                adjustBoard(col_index);
+                break;
+        }
+    }
+
+    private void AITurn() {
+        if(ai_first_turn){
+            // Insert Coin in the middle as First AI move always!
+            ai_first_turn = false;
+            insertCoin(column4_row_count,4,col4_x_pos,column4_y);
+            adjustBoard(4);
+        }
+        else {
+            Tree root = AI.createTree(board);
+            //AI.printBoard(board);
+            //Long start = System.currentTimeMillis();
+            AI.parseTree(root);
+            //System.out.println("Parsed the tree in "+ (System.currentTimeMillis()-start) + " milliseconds");
+            int[] value = AI.minimax(0,3,0,7,true,AI.getValues(),AI.MIN,AI.MAX);
+            System.out.println(Arrays.toString(value));
+            int x,y,z;
+            z = value[1] % 7;
+            y = Math.floorDiv(value[1],7) % 7;
+            x = Math.floorDiv(Math.floorDiv(value[1],7),7) % 7;
+            Board b = root.children[x].children[y].children[z].getBoard();
+            AI.printBoard(b);
+            //if(value[0] == 0){
+            //    AIRandom();
+            //} else {
                 /*
-                col1: 0->48
-                col2: 49->97
-                col3: 98->146
-                col4: 147->195
-                col5: 196->244
-                col6: 245->293
-                col7: 294->342
+                col1: 0->48 col2: 49->97 col3: 98->146 col4: 147->195
+                col5: 196->244 col6: 245->293 col7: 294->342
                 */
                 if(value[1] >= 0 && value[1] <= 48)
-                {
-                    insertCoin(column1_row_count,1,col1_x_pos,column1_y);
-                    adjustBoard(1);
+                {   if (column1_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column1_row_count,1,col1_x_pos,column1_y);
+                        adjustBoard(1);
+                    }
                 }
                 else if(value[1] >= 49 && value[1] <= 97)
                 {
-                    insertCoin(column2_row_count,2,col2_x_pos,column2_y);
-                    adjustBoard(2);
+                    if (column2_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column2_row_count,2,col2_x_pos,column2_y);
+                        adjustBoard(2);
+                    }
                 }
                 else if(value[1] >= 98 && value[1] <= 146)
                 {
-                    insertCoin(column3_row_count,3,col3_x_pos,column3_y);
-                    adjustBoard(3);
+                    if (column3_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column3_row_count,3,col3_x_pos,column3_y);
+                        adjustBoard(3);
+                    }
                 }
                 else if(value[1] >= 147 && value[1] <= 195)
                 {
-                    insertCoin(column4_row_count,4,col4_x_pos,column4_y);
-                    adjustBoard(4);
+                    if (column4_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column4_row_count,4,col4_x_pos,column4_y);
+                        adjustBoard(4);
+                    }
                 }
                 else if(value[1] >= 196 && value[1] <= 244)
                 {
-                    insertCoin(column5_row_count,5,col5_x_pos,column5_y);
-                    adjustBoard(5);
+                    if (column5_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column5_row_count,5,col5_x_pos,column5_y);
+                        adjustBoard(5);
+                    }
                 }
                 else if(value[1] >= 245 && value[1] <= 293)
                 {
-                    insertCoin(column6_row_count,6,col6_x_pos,column6_y);
-                    adjustBoard(6);
+                    if (column6_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column6_row_count,6,col6_x_pos,column6_y);
+                        adjustBoard(6);
+                    }
                 }
                 else if(value[1] >= 294 && value[1] <= 342)
                 {
-                    insertCoin(column7_row_count,7, col7_x_pos,column7_y);
-                    adjustBoard(7);
+                    if (column7_row_count == 0){
+                        AIRandom();
+                    }
+                    else{
+                        insertCoin(column7_row_count,7, col7_x_pos,column7_y);
+                        adjustBoard(7);
+                    }
                 }
                 coins_count -= 1;
             }
-        }
+        //}
     }
 
     public void column1_pressed()
