@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.menuController">
+<StackPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.menuController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -40,6 +40,11 @@
             <Button layoutX="462.0" layoutY="209.0" mnemonicParsing="false" onAction="#changeSceneToBoard" text="New Game">
                <font>
                   <Font name="Times New Roman Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="continueBtn" layoutX="467.0" layoutY="251.0" mnemonicParsing="false" onAction="#changeSceneToBoardWithSavedGame" text="Continue">
+               <font>
+                  <Font name="Times New Roman Italic" size="14.0" />
                </font>
             </Button>
          </children>

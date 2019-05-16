@@ -14,7 +14,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +37,8 @@ public class boardController
 
     // Used only at AI if it plays First!, default false.
     private boolean ai_first_turn = false;
+
+
 
 
     // AnchorPane used in the scene
@@ -119,54 +124,184 @@ public class boardController
                 column1_y -= center_to_center_distance;
                 column1_row_count -= 1;
                 board.setXY(column1_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 2:
                 column2_y -= center_to_center_distance;
                 column2_row_count -= 1;
                 board.setXY(column2_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 3:
                 column3_y -= center_to_center_distance;
                 column3_row_count -= 1;
                 board.setXY(column3_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 4:
                 column4_y -= center_to_center_distance;
                 column4_row_count -= 1;
                 board.setXY(column4_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 5:
                 column5_y -= center_to_center_distance;
                 column5_row_count -= 1;
                 board.setXY(column5_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 6:
                 column6_y -= center_to_center_distance;
                 column6_row_count -= 1;
                 board.setXY(column6_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
             case 7:
                 column7_y -= center_to_center_distance;
                 column7_row_count -= 1;
                 board.setXY(column7_row_count,col-1,board_value);
-                changeTurn();
                 //printCols();
                 break;
         }
 
+        changeTurn();
     }
+
+    private void resetSavedBoard() throws IOException {
+
+        Path fileToDeletePath = Paths.get("board.ser");
+        Files.deleteIfExists(fileToDeletePath);
+
+    }
+
+    private void saveBoard(Board board) {
+
+        System.out.println(Arrays.deepToString(board.getBoard()));
+        ObjectOutputStream out = null;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("board.ser", false);
+            out = new ObjectOutputStream(fileOutputStream);
+
+            out.writeObject(board.getBoard());
+            out.flush();
+            fileOutputStream.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadBoard() {
+
+
+        ObjectInputStream in = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream("board.ser");
+            in = new ObjectInputStream(fileInputStream);
+            board.setClass_board((int[][]) in.readObject());
+            fileInputStream.close();
+            in.close();
+
+            System.out.println(Arrays.deepToString(board.getBoard()));
+
+            for (int i = board.getRow_count() - 1; i >= 0; i--){
+                for (int j = 0; j < board.getCol_count(); j++){
+
+                    if (board.getBoard()[i][j] == 1){
+                        red_or_yellow = false;
+                        player_or_ai = true;
+                        switch (j + 1) {
+                            case 1:
+                                insertCoin(column1_row_count, j + 1, col1_x_pos, column1_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 2:
+                                insertCoin(column2_row_count, j + 1, col2_x_pos, column2_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 3:
+                                insertCoin(column3_row_count, j + 1, col3_x_pos, column3_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 4:
+                                insertCoin(column4_row_count, j + 1, col4_x_pos, column4_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 5:
+                                insertCoin(column5_row_count, j + 1, col5_x_pos, column5_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 6:
+                                insertCoin(column6_row_count, j + 1, col6_x_pos, column6_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 7:
+                                insertCoin(column7_row_count, j + 1, col7_x_pos, column7_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                        }
+                    }
+                    else if (board.getBoard()[i][j] == 2){
+                        red_or_yellow = true;
+                        player_or_ai = false;
+                        switch (j + 1) {
+                            case 1:
+                                insertCoin(column1_row_count, j + 1, col1_x_pos, column1_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 2:
+                                insertCoin(column2_row_count, j + 1, col2_x_pos, column2_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 3:
+                                insertCoin(column3_row_count, j + 1, col3_x_pos, column3_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 4:
+                                insertCoin(column4_row_count, j + 1, col4_x_pos, column4_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 5:
+                                insertCoin(column5_row_count, j + 1, col5_x_pos, column5_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 6:
+                                insertCoin(column6_row_count, j + 1, col6_x_pos, column6_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                            case 7:
+                                insertCoin(column7_row_count, j + 1, col7_x_pos, column7_y);
+                                adjustBoard(j + 1);
+                                coins_count -= 1;
+                                break;
+                        }
+                    }
+                }
+            }
+            red_or_yellow = false;
+            player_or_ai = true;
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println(Arrays.deepToString(board.getBoard()));
+    }
+
 
     private void AIRandom() {
         int col_index = AI.random_move();
@@ -661,6 +796,9 @@ public class boardController
 
         // Parent board = FXMLLoader.load(getClass().getResource("board.fxml"));
         // Those lines do the same thing
+
+        resetSavedBoard();
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("result.fxml"));
         Parent result = loader.load();
@@ -687,6 +825,7 @@ public class boardController
 
     private void gameState()
     {
+        saveBoard(board);
         winner = checkWin(board);
         if(winner == 0 || winner == 1 || winner == 2) {
             try {
@@ -695,6 +834,7 @@ public class boardController
                 e.printStackTrace();
             }
         }
+
     }
 }
 
